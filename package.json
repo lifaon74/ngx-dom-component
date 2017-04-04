@@ -1,0 +1,41 @@
+{
+  "name": "ngx-dom-component",
+  "version": "1.0.0",
+  "description": "Angular 4+ component injector and manipulation tools",
+  "main": "ngx-dom-component.bundle.js",
+  "module": "ngx-dom-component.module.js",
+  "jsnext:main": "ngx-dom-component.js",
+  "types": "ngx-dom-component.d.ts",
+  "scripts": {
+    "start": "ts-node ./tools/make.ts",
+    "publish": "npm publish ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifaon74/ngx-dom-component"
+  },
+  "author": "valentin",
+  "license": "ISC",
+  "peerDependencies": {
+    "@angular/core": ">=4.0.0"
+  },
+  "devDependencies": {
+    "@angular/compiler": "^4.0.1",
+    "@angular/compiler-cli": "^4.0.1",
+    "@angular/core": "^4.0.1",
+    "@types/node": "^7.0.0",
+    "codelyzer": "^3.0.0-beta.4",
+    "core-js": "^2.4.1",
+    "fs-promise": "^2.0.0",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.41.4",
+    "rxjs": "^5.0.3",
+    "systemjs": "0.20.11",
+    "ts-helpers": "^1.1.2",
+    "ts-node": "^3.0.2",
+    "tslib": "^1.5.0",
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.2",
+    "zone.js": "^0.8.5"
+  }
+}
