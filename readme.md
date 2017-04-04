@@ -102,7 +102,7 @@ this.ngxDOMComponentContainer.create({
 ```
 
 ### NgxDOMComponent
-Create and inject a Angular 2+ Component into the DOM.
+Create and inject a Angular 4+ Component into the DOM.
 ```ts
 class NgxDOMComponent {
   constructor(options: NgxDOMComponentCreateOptions);
