@@ -1,6 +1,6 @@
 ### NGX-DOM-Component
 
-Provide component injection and manipulation in DOM for your angular 2+ application :
+Provide component injection and manipulation in DOM for your angular 4+ application :
 
 Allow you to inject component into the DOM including inputs/outputs. And then manipulating this component by removing/deleting it from the DOM.
 
@@ -30,9 +30,9 @@ export class MyComponent {
   selector: 'my-app',
   template: `
     <div class="container">
-      <template #contentContainer></template>
+      <ng-template #contentContainer></ng-template>
     </div>
-  ` // <ng-template #contentContainer></<ng-template> for angular 4+
+  `
 })
 export class AppComponent implements OnInit {
   @ViewChild('contentContainer', { read: ViewContainerRef }) contentContainerRef: ViewContainerRef;
