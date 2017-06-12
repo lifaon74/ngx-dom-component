@@ -2,7 +2,6 @@ import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgxDOMComponent, NgxDOMComponentContainer } from './ngx-dom-component.class';
 
 @Component({
-  moduleId: module.id,
   selector: 'ngx-dom-component',
   template: `<ng-template #contentContainer></ng-template>`
 })
