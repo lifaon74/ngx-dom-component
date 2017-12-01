@@ -44,28 +44,52 @@ export class NgxDOMComponent {
     inputs: { [key: string] : any } = {},
     outputs: { [key: string] : Function } = {}
   ) {
+
+    const handledProperties: string[] = [];
+
+    function handlePropMetadata(propertyName: string, decoratorName: string): void {
+      const key: string = propertyName + '-' + decoratorName;
+      if(handledProperties.indexOf(key) === -1) {
+        handledProperties.push(key);
+        switch(decoratorName) {
+          case '@Input':
+            if(inputs[propertyName]) {
+              componentRef.instance[propertyName] = inputs[propertyName];
+            } else {
+              console.warn('Missing input [' + propertyName + '] for ' + componentType.name);
+            }
+            break;
+          case '@Output':
+            if(typeof outputs[propertyName] === 'function') {
+              componentRef.instance[propertyName].subscribe(outputs[propertyName]);
+            } else {
+              console.warn('Missing output (' + propertyName + ') for ' + componentType.name);
+            }
+            break;
+        }
+      }
+    }
+
     // http://stackoverflow.com/questions/34465214/access-meta-annotation-inside-class-typescript
-    let propMetadata: any = (<any>Reflect).getOwnMetadata('propMetadata', componentType);
-    for(let prop in propMetadata) {
-      if(propMetadata[prop].length > 0) {
-        propMetadata[prop].forEach((metadata: any) => {
-          switch(metadata.toString()) {
-            case '@Input':
-              if(inputs[prop]) {
-                componentRef.instance[prop] = inputs[prop];
-              } else {
-                console.warn('Missing input [' + prop + '] for ' + componentType.name);
-              }
-              break;
-            case '@Output':
-              if(typeof outputs[prop] === 'function') {
-                componentRef.instance[prop].subscribe(outputs[prop]);
-              } else {
-                console.warn('Missing output (' + prop + ') for ' + componentType.name);
-              }
-              break;
-          }
-        });
+    let propMetadata: any = (Reflect as any).getOwnMetadata('propMetadata', componentType);
+    if(propMetadata) {
+      for(const prop in propMetadata) {
+        if(propMetadata[prop].length > 0) {
+          propMetadata[prop].forEach((metadata: any) => {
+            handlePropMetadata(prop, metadata.toString());
+          });
+        }
+      }
+    }
+
+    propMetadata = componentType['__prop__metadata__'];
+    if(propMetadata) {
+      for(const prop in propMetadata) {
+        if(propMetadata[prop].length > 0) {
+          propMetadata[prop].forEach((metadata: any) => {
+            handlePropMetadata(prop, '@' + metadata.ngMetadataName);
+          });
+        }
       }
     }
   }
