@@ -94,7 +94,10 @@ Task
     return shell.execute('tsc', ['-p', 'tsconfig-esm.json']);
   })
   .register('rollup', () => {
-    return shell.execute('rollup', ['-c', 'rollup.config.js', 'dist/' + config.libName + '.js', '>', 'dist/' + config.libName + '.bundle.js']);
+    return shell.execute('rollup', ['-c', 'rollup.config.js', 'dist/' + config.libName + '.js', '>', 'dist/' + config.libName + '.bundle.js'])
+      .catch((error: any) => { // because rollup output in stderr...
+        console.error(error);
+      });
   })
   .register('copy-package', () => {
     const destination = './dist/package.json';

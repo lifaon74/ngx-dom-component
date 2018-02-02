@@ -182,7 +182,7 @@ export class NgxDOMComponent {
   private setupDetectChange() {
     this._differ = NgxDOMComponent.differs
       .find(this._componentRef.instance)
-      .create(this._componentRef.changeDetectorRef);
+      .create();
   }
 
 

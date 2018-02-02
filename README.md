@@ -1,6 +1,6 @@
 ### NGX-DOM-Component
 
-Provide component injection and manipulation in DOM for your angular 4+ application :
+Provide component injection and manipulation in DOM for your angular 5+ application :
 
 Allow you to inject component into the DOM including inputs/outputs. And then manipulating this component by removing/deleting it from the DOM.
 
@@ -102,7 +102,7 @@ this.ngxDOMComponentContainer.create({
 ```
 
 ### NgxDOMComponent
-Create and inject a Angular 4+ Component into the DOM.
+Create and inject a Angular 5+ Component into the DOM.
 ```ts
 class NgxDOMComponent {
   constructor(options: NgxDOMComponentCreateOptions);

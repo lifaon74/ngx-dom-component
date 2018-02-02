@@ -1,6 +1,8 @@
 export default {
-  format: 'umd',
-  moduleName: 'ngx-dom-component',
+  output: {
+    name: 'ngx-dom-component',
+    format: 'umd',
+  },
   external: [
     '@angular/core'
   ],
