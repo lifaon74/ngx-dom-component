@@ -5,7 +5,7 @@ Provide component injection and manipulation in DOM for your angular 5+ applicat
 Allow you to inject component into the DOM including inputs/outputs. And then manipulating this component by removing/deleting it from the DOM.
 
 ```
-npm i ngx-dom-component
+npm i ngx-dom-component --save
 ```
 
 ### NgxDOMComponentModule
@@ -22,11 +22,11 @@ import { NgxDOMComponentService, NgxDOMComponentCreateOptions, NgxDOMComponent }
   template: '<span>{{ message }}</span>'
 })
 export class MyComponent {
-    @Input() message;
+    @Input()
+    public message;
 }
 
 @Component({
-  moduleId: module.id,
   selector: 'my-app',
   template: `
     <div class="container">
@@ -35,13 +35,14 @@ export class MyComponent {
   `
 })
 export class AppComponent implements OnInit {
-  @ViewChild('contentContainer', { read: ViewContainerRef }) contentContainerRef: ViewContainerRef;
+  @ViewChild('contentContainer', { read: ViewContainerRef })
+  public contentContainerRef: ViewContainerRef;
 
   constructor(private ngxDOMComponentService: NgxDOMComponentService) {}
 
   ngOnInit() {
-    this.ngxDOMComponentService.init();
-    let child: NgxDOMComponent  = this.ngxDOMComponentService.create(<NgxDOMComponentCreateOptions>{
+    this.ngxDOMComponentService.init(); // DO NOT FORGET TO INIT !!!!
+    let child: NgxDOMComponent  = this.ngxDOMComponentService.create({
       viewContainerRef: contentContainerRef,
       componentType: MyComponent,
       inputs: {
@@ -56,9 +57,9 @@ export class AppComponent implements OnInit {
 }
 ```
 
-### NgxDOMComponentCreateOptions
+### NgxDOMComponentOptions
 ```ts
-interface NgxDOMComponentCreateOptions {
+interface NgxDOMComponentOptions {
   viewContainerRef?: ViewContainerRef; // the parent of the component
   componentType: any; // the component class
   inputs?: { [key: string] : any }; // a list of inputs to provide to the component @Input
@@ -81,6 +82,23 @@ createComponent(options: NgxDOMComponentCreateOptions): NgxDOMComponent;
 ```
 Create a new NgxDOMComponent and inject it onto the dom.
 
+### NgxEntryComponent (Decorator)
+In some case (ex: when compiling in AOT mode) the metadata properties are lost and the binding of the inputs/outputs becomes impossible. As a result you wont see your inputs changes (ngOnChanges) and the outputs wont be binded. If you encounter this situation, you can use the decorator `NgxEntryComponent` and provide directly the list of properties as inputs and outputs
+```ts
+@NgxEntryComponent({
+  inputs: ['message']
+  outputs: []
+})
+@Component({
+  selector: 'my-component',
+  template: 'some html'
+})
+export class MyComponent {
+    @Input()
+    public message: string;
+    //...
+}
+```
 ### NgxDOMComponentContainer
 Create a wrapper for the ViewContainerRef, allowing you not providing the `viewContainerRef` attribute of `NgxDOMComponentCreateOptions`.
 ```ts
@@ -111,6 +129,7 @@ class NgxDOMComponent {
   readonly componentRef: ComponentRef<any>; // the component ref
   readonly componentType: any; // the component class
   readonly element: HTMLElement; // the dom element
+  readonly instance: any; // the instance of the constructor
 
   insert(index?: number, viewContainerRef?: ViewContainerRef): this; // insert the component at a specific index in viewContainerRef
   move(index?: number, viewContainerRef?: ViewContainerRef): this;  // move the component at a specific index in viewContainerRef
@@ -132,5 +151,5 @@ class NgxDOMComponent {
   }"
 ></ngx-dom-component>
 ```
-Inject an angular 2 component. The config is the same as `NgxDOMComponentCreateOptions^` except that you don't need to provide a container.
+Inject an angular 2+ component. The config is the same as `NgxDOMComponentOptions` except that you don't need to provide a container.
 

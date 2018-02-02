@@ -1,6 +1,6 @@
 {
   "name": "ngx-dom-component",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Angular 5+ component injector and manipulation tools",
   "main": "ngx-dom-component.bundle.js",
   "_module_": "ngx-dom-component.module.js",

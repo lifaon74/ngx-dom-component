@@ -1,6 +1,12 @@
 import { Injectable, ComponentFactoryResolver, KeyValueDiffers, ViewContainerRef } from '@angular/core';
-import { NgxDOMComponent, NgxDOMComponentContainer, NgxDOMComponentCreateOptions } from './ngx-dom-component.class';
+import { NgxDOMComponent, NgxDOMComponentOptions } from './classes/NgxDOMComponent';
+import { NgxDOMComponentContainer } from './classes/NgxDOMComponentContainer';
 
+
+/**
+ * The service must be called before anything because NgxDOMComponent requires :
+ *  ComponentFactoryResolver and KeyValueDiffers
+ */
 
 @Injectable()
 export class NgxDOMComponentService {
@@ -11,7 +17,7 @@ export class NgxDOMComponentService {
     NgxDOMComponent.differs = differs;
   }
 
-  init() {
+  init(): void {
     // not empty
   }
 
@@ -19,7 +25,7 @@ export class NgxDOMComponentService {
     return new NgxDOMComponentContainer(viewContainerRef);
   }
 
-  createComponent(options: NgxDOMComponentCreateOptions): NgxDOMComponent {
+  createComponent(options: NgxDOMComponentOptions): NgxDOMComponent {
     return new NgxDOMComponent(options);
   }
 }
