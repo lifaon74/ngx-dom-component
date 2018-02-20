@@ -46,21 +46,24 @@ export function SetNgxEntryComponentMetaData(target: any, metadataEntries: Metad
 
 export function GetNgxEntryComponentMetaData(target: any): MetadataEntry[] {
   const metadataEntries: MetadataEntry[] = [];
+  let metadataList: any;
 
-  let metadataList: any = (Reflect as any).getOwnMetadata('propMetadata', target);
-  if(metadataList) {
-    for(const propertyName in metadataList) {
-      if(metadataList[propertyName].length > 0) {
-        metadataList[propertyName].forEach((metadata: any) => {
-          let metadataName: string = metadata.toString();
-          if(metadataName.startsWith('@')) {
-            metadataName = metadataName.substring(1);
-          }
-          metadataEntries.push({
-            propertyName: propertyName,
-            metadataName: metadataName
+  if (typeof Reflect !== 'undefined') {
+    metadataList = (Reflect as any).getOwnMetadata('propMetadata', target);
+    if(metadataList) {
+      for(const propertyName in metadataList) {
+        if(metadataList[propertyName].length > 0) {
+          metadataList[propertyName].forEach((metadata: any) => {
+            let metadataName: string = metadata.toString();
+            if(metadataName.startsWith('@')) {
+              metadataName = metadataName.substring(1);
+            }
+            metadataEntries.push({
+              propertyName: propertyName,
+              metadataName: metadataName
+            });
           });
-        });
+        }
       }
     }
   }
